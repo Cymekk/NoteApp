@@ -1,8 +1,12 @@
 <template>
 	<div class="note">
-		<div class="buttons-box">
-			<router-link :to="`/edit/${props.note.id}`"><button class="edit"></button></router-link>
-			<button @click="modals.deleteNote = true" class="remove"></button>
+		<div class="title-bar">
+			<div class="title">{{ props.note.title }}</div>
+
+			<div class="buttons-box">
+				<router-link :to="`/edit/${props.note.id}`"><button class="edit"></button></router-link>
+				<button @click="modals.deleteNote = true" class="remove"></button>
+			</div>
 		</div>
 
 		<div class="text">{{ props.note.content }}</div>
@@ -24,9 +28,7 @@ const props = defineProps({
 	},
 })
 
-const storeNotes = useStoreNotes()
-
-const formatted = useDateFormat(storeNotes.notes.date, 'YYYY-MM-DD')
+const formatted = useDateFormat(props.note.date, 'YYYY-MM-DD')
 
 const modals = reactive({
 	deleteNote: false,
@@ -39,45 +41,60 @@ const modals = reactive({
 	justify-content: space-between;
 	width: 45%;
 	margin: 1em 0;
-	padding: 1em;
 	border-radius: 10px;
-	background-color: #cecece;
+	background-color: var(--secondary-color);
 	font-size: 1rem;
 	text-align: justify;
-	box-shadow: 0px 0px 10px rgb(0, 0, 0);
+	overflow: hidden;
 
-	.buttons-box {
-		text-align: right;
+	.title-bar {
+		padding: 0.5em 1em;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid #000;
 		margin-bottom: 1em;
+		background-color: var(--primary-color);
+		.title {
+			width: 50%;
+			text-align: center;
+			font-size: 1.2rem;
+			color: var(--white-color);
+		}
+		.buttons-box {
+			width: 40%;
+			text-align: right;
 
-		button {
-			width: 20px;
-			height: 20px;
-			background: none;
-			border: none;
-			background-repeat: no-repeat;
-			background-position: center;
-			cursor: pointer;
+			button {
+				width: 20px;
+				height: 20px;
+				background: none;
+				border: none;
+				background-repeat: no-repeat;
+				background-position: center;
+				cursor: pointer;
 
-			&:last-child {
-				margin-left: 1em;
+				&:last-child {
+					margin-left: 0.5em;
+				}
 			}
-		}
 
-		.edit {
-			background-image: url('../assets/edit-3.svg');
-		}
+			.edit {
+				background-image: url('../assets/edit-3.svg');
+			}
 
-		.remove {
-			background-image: url('../assets/x\ \(1\).svg');
+			.remove {
+				background-image: url('../assets/x\ \(1\).svg');
+			}
 		}
 	}
 
 	.text {
-		overflow: hidden;
+		padding: 0.5em;
 	}
 
 	.date {
+		padding: 0.5em;
 		display: block;
 		text-align: right;
 		margin-top: 1em;

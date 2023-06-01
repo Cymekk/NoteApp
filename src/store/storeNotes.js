@@ -44,6 +44,7 @@ export const useStoreNotes = defineStore('storeNotes', {
 					querySnapshot.forEach(doc => {
 						let note = {
 							id: doc.id,
+							title: doc.data().title,
 							content: doc.data().content,
 							date: doc.data().date,
 						}
@@ -63,12 +64,12 @@ export const useStoreNotes = defineStore('storeNotes', {
 			if (getNotesSnapshot) getNotesSnapshot() // unsubcribe from an active listener
 		},
 
-		async addNote(newNoteContent) {
-			let currentDate = new Date().getTime(),
-				date = currentDate.toString()
+		async addNote(noteDetails) {
+			let date = Date.now()
 
 			await addDoc(notesCollectionRef, {
-				content: newNoteContent,
+				title: noteDetails.title,
+				content: noteDetails.content,
 				date,
 			})
 		},
@@ -77,9 +78,10 @@ export const useStoreNotes = defineStore('storeNotes', {
 			await deleteDoc(doc(notesCollectionRef, idToDelete))
 		},
 
-		async updateNote(id, content) {
+		async updateNote(id, noteDetails) {
 			await updateDoc(doc(notesCollectionRef, id), {
-				content,
+				content: noteDetails.content,
+				title: noteDetails.title,
 			})
 		},
 	},
@@ -87,7 +89,7 @@ export const useStoreNotes = defineStore('storeNotes', {
 	getters: {
 		getNoteContent: state => {
 			return id => {
-				return state.notes.filter(note => note.id === id)[0].content
+				return state.notes.filter(note => note.id === id)[0]
 			}
 		},
 

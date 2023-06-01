@@ -1,9 +1,6 @@
 <template>
 	<div class="wrapper">
-		<div class="note-area">
-			<textarea placeholder="Type something..." v-model="content"> </textarea>
-			<button @click="addNote" :disabled="!content">Add note</button>
-		</div>
+		<button @click="addNotePopup = true">Add note</button>
 
 		<div class="notes-container">
 			<NoteComponent v-for="note in storeNotes.notes" :key="note.id" :note="note" />
@@ -14,27 +11,72 @@
 		</div>
 
 		<p v-if="!storeNotes.notes.length" class="no-notes">No notes added. Please add new note</p>
+
+		<NotePopupComponent
+			v-if="addNotePopup"
+			:title="title"
+			v-model:NoteTitle="noteDetails.title"
+			v-model:content="noteDetails.content"
+		>
+			<template #inputs>
+				<label>Title</label>
+				<input placeholder="Add note title" v-model="noteDetails.title" />
+				<label>Description</label>
+				<textarea placeholder="Add note content" v-model="noteDetails.content"></textarea>
+			</template>
+			<template #buttons>
+				<button class="cancel" @click="closePopup">Cancel</button>
+				<button @click="addNote" :disabled="!noteDetails.title || !noteDetails.content" class="save">Save</button>
+			</template>
+		</NotePopupComponent>
 	</div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import { useStoreNotes } from '../store/storeNotes'
 import NoteComponent from '../components/NoteComponent.vue'
+import NotePopupComponent from '../components/NotePopupComponent.vue'
 
-const content = ref('')
 const storeNotes = useStoreNotes()
+const addNotePopup = ref(false)
+const noteDetails = reactive({
+	title: '',
+	content: '',
+})
 
-const addNote = () => {
-	storeNotes.addNote(content.value)
-	content.value = ''
-}
+const title = 'Add Note'
 
 onMounted(() => {
 	storeNotes.getNotes()
 })
+
+const addNote = () => {
+	storeNotes.addNote(noteDetails)
+	closePopup()
+}
+
+const closePopup = () => {
+	addNotePopup.value = false
+	noteDetails.title = ''
+	noteDetails.content = ''
+}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+button {
+	display: block;
+	margin: 0 auto;
+	padding: 1em 2em;
+	background: none;
+	border: none;
+	background-color: var(--primary-color);
+	color: var(--white-color);
+	margin-bottom: 1em;
+}
+
+.cancel {
+	color: #000;
+}
 .notes-container {
 	max-width: 600px;
 	margin: 0 auto;

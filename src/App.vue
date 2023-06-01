@@ -18,6 +18,17 @@ onMounted(() => {
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+:root {
+	--background-color: rgb(214, 214, 214);
+	--primary-color: rgb(0, 97, 29);
+	--secondary-color: rgb(110, 170, 94);
+	--white-color: rgb(255, 255, 255);
+	--black-color: rgb(0, 0, 0);
+	--lightgrey-color: rgb(109, 109, 109);
+	--redprimary-color: rgb(255, 69, 69);
+	--redsecondary-color: rgb(255, 0, 0);
+}
+
 *,
 *::after,
 *::before {
@@ -29,7 +40,7 @@ onMounted(() => {
 body {
 	font-size: 62.5%;
 	font-family: 'Roboto', sans-serif;
-	background-color: #d6d6d6;
+	background-color: var(--background-color);
 }
 
 .wrapper {
@@ -38,39 +49,9 @@ body {
 	padding: 2em;
 }
 
-.note-area {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	max-width: 600px;
-	margin: 0 auto;
-	padding: 1em;
-	background-color: rgb(1, 94, 1);
+button {
 	border-radius: 10px;
-
-	textarea {
-		padding: 5px;
-		width: 100%;
-		height: 100px;
-		max-width: 100%;
-		border-radius: 10px;
-	}
-
-	button {
-		padding: 1em;
-		margin-top: 1em;
-		width: 25%;
-		background-color: rgb(21, 167, 21);
-		border: none;
-		border-radius: 10px;
-		color: #fff;
-		font-weight: bold;
-		cursor: pointer;
-
-		&:disabled {
-			opacity: 0.5;
-			cursor: default;
-		}
-	}
+	cursor: pointer;
+	font-weight: bold;
 }
 </style>

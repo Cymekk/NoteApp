@@ -18,7 +18,7 @@ const storeAuth = useStoreAuth()
 <style lang="scss">
 .navbar {
 	display: block;
-	background-color: rgb(0, 97, 29);
+	background-color: var(--primary-color);
 	width: 100%;
 	height: 50px;
 	padding: 1em;
@@ -28,6 +28,7 @@ const storeAuth = useStoreAuth()
 		margin: 0 auto;
 		display: flex;
 		justify-content: space-between;
+
 		.logo {
 			display: flex;
 			align-items: center;
@@ -41,16 +42,15 @@ const storeAuth = useStoreAuth()
 				font-size: 1.2rem;
 				margin-left: 0.25em;
 			}
-
-			button {
-				background: none;
-				border: none;
-				color: #fff;
-				padding: 0.5em;
-				border: 1px solid #fff;
-				border-radius: 5px;
-				cursor: pointer;
-			}
+		}
+		button {
+			background: none;
+			border: none;
+			color: #fff;
+			padding: 0.5em;
+			border: 1px solid #fff;
+			border-radius: 5px;
+			cursor: pointer;
 		}
 	}
 }

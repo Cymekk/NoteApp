@@ -1,28 +1,36 @@
 <template>
-	<div class="wrapper">
-		<div class="note-area edit-area">
-			<textarea v-model="noteContent"></textarea>
-			<div class="buttons-box">
-				<button @click="router.back()" class="cancel">Cancel</button>
-				<button @click="updateNote" class="save">Save</button>
-			</div>
-		</div>
-	</div>
+	<NotePopupComponent :title="title" v-model:noteTitle="noteDetails.title" v-model:content="noteDetails.content">
+		<template #inputs>
+			<label>Title</label>
+			<input placeholder="Add note title" v-model="noteDetails.title" />
+			<label>Description</label>
+			<textarea placeholder="Add note content" v-model="noteDetails.content"></textarea>
+		</template>
+		<template #buttons>
+			<button @click="router.back()" class="cancel">Cancel</button>
+			<button @click="updateNote" :disabled="!noteDetails.title || !noteDetails.content" class="save">Save</button>
+		</template>
+	</NotePopupComponent>
 </template>
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { useStoreNotes } from '@/store/storeNotes'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
+import NotePopupComponent from '@/components/NotePopupComponent.vue'
 
 const route = useRoute()
 const router = useRouter()
 const storeNotes = useStoreNotes()
-const noteContent = ref('')
 
-noteContent.value = storeNotes.getNoteContent(route.params.id)
+const title = 'Edit Note'
+
+const noteDetails = reactive({
+	title: storeNotes.getNoteContent(route.params.id).title,
+	content: storeNotes.getNoteContent(route.params.id).content,
+})
 
 const updateNote = () => {
-	storeNotes.updateNote(route.params.id, noteContent.value)
+	storeNotes.updateNote(route.params.id, noteDetails)
 	router.back()
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
 	<div class="auth">
 		<div class="login-and-register">
-			<button @click.prevent="register = !register" :class="{ active: !register }">Login</button>
-			<button @click.prevent="register = !register" :class="{ active: register }">Register</button>
+			<button @click.prevent="register = false" :class="{ active: !register }">Login</button>
+			<button @click.prevent="register = true" :class="{ active: register }">Register</button>
 		</div>
 
 		<div class="login-register-box">
@@ -74,6 +74,7 @@ onMounted(() => {
 			font-size: 1rem;
 			cursor: pointer;
 			font-weight: bold;
+			border-radius: 0;
 		}
 
 		.active {

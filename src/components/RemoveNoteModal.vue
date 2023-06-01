@@ -1,6 +1,6 @@
 <template>
 	<div class="modal">
-		<div class="modal-body" ref="target">
+		<div class="modal-body" ref="targetRef">
 			<h2>Are you sure you want to delete this note?</h2>
 			<div class="buttons-box">
 				<button @click="closeModal" class="button cancel">Cancel</button>
@@ -34,8 +34,8 @@ const closeModal = () => {
 	emit('update:modelValue', false)
 }
 
-const target = ref(null)
-onClickOutside(target, closeModal)
+const targetRef = ref(null)
+onClickOutside(targetRef, closeModal)
 </script>
 <style lang="scss" scoped>
 .modal {
@@ -80,19 +80,20 @@ onClickOutside(target, closeModal)
 			}
 			.cancel {
 				margin-right: 1em;
-				background-color: #ffffff;
+				background-color: var(--white-color);
+
 				&:hover {
-					background-color: grey;
-					color: #fff;
+					background-color: var(--lightgrey-color);
+					color: var(--white-color);
 				}
 			}
 
 			.delete {
-				background-color: rgb(255, 69, 69);
+				background-color: var(--redprimary-color);
 
 				&:hover {
-					background-color: red;
-					color: #fff;
+					background-color: var(--redsecondary-color);
+					color: var(--white-color);
 				}
 			}
 		}
