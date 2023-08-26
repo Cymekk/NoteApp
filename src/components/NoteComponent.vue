@@ -73,10 +73,8 @@ const modals = reactive({
 				background-repeat: no-repeat;
 				background-position: center;
 				cursor: pointer;
+				padding: 5px;
 
-				&:last-child {
-					margin-left: 0.5em;
-				}
 			}
 
 			.edit {

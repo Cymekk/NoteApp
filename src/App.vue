@@ -4,7 +4,7 @@
 </template>
 
 <script setup>
-import NavbarComponent from './components/NavbarComponent.vue'
+import NavbarComponent from './components/NavbarComponent.vue';
 import { useStoreAuth } from './store/storeAuth'
 import { onMounted } from 'vue'
 
